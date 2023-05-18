@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?PowerDesigner AppLocale="UTF16" ID="{1F7AD21B-4E1C-4495-8408-EACF7860D01B}" Label="" LastModificationDate="1684401952" Name="Tourisme62.mcd" Objects="149" Symbols="12" Target="ORACLE Version 11g" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" signature="PDM_DATA_MODEL_XML" version="15.3.0.3445"?>
+<?PowerDesigner AppLocale="UTF16" ID="{1F7AD21B-4E1C-4495-8408-EACF7860D01B}" Label="" LastModificationDate="1684412362" Name="Tourisme62.mcd" Objects="149" Symbols="12" Target="ORACLE Version 11g" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" signature="PDM_DATA_MODEL_XML" version="15.3.0.3445"?>
 <!-- Veuillez ne pas modifier ce fichier -->
 
 <Model xmlns:a="attribute" xmlns:c="collection" xmlns:o="object">
@@ -12,7 +12,7 @@
 <a:Code>TOURISME62_MCD</a:Code>
 <a:CreationDate>1684401259</a:CreationDate>
 <a:Creator>fayda</a:Creator>
-<a:ModificationDate>1684401952</a:ModificationDate>
+<a:ModificationDate>1684412362</a:ModificationDate>
 <a:Modifier>fayda</a:Modifier>
 <a:History>ORG {EA30FE4F-D9CF-4EDA-AB47-B9989D5966AF}
 DAT 1684401331
@@ -86,7 +86,7 @@ UpdateTableStatistics=Yes
 UpdateColumnStatistics=Yes
 
 [FolderOptions\Physical Objects\Database Generation]
-GenScriptName=crebas
+GenScriptName=crebas.sql
 GenScriptName0=
 GenScriptName1=
 GenScriptName2=
@@ -97,7 +97,7 @@ GenScriptName6=
 GenScriptName7=
 GenScriptName8=
 GenScriptName9=
-GenPathName=
+GenPathName=C:\Users\fayda\I.U.T\S2SAEBdD\
 GenSingleFile=Yes
 GenODBC=No
 GenCheckModel=Yes
@@ -249,15 +249,15 @@ Physical Options=Yes
 
 [FolderOptions\Physical Objects\Database Generation\Table&amp;&amp;Column\Foreign key]
 Create=Yes
-Drop=Yes
+Drop=No
 Comment=Yes
 
 [FolderOptions\Physical Objects\Database Generation\Table&amp;&amp;Column\Foreign key\Create]
 Constraint declaration=Yes
 
 [FolderOptions\Physical Objects\Database Generation\Table&amp;&amp;Column\Index]
-Create=Yes
-Drop=Yes
+Create=No
+Drop=No
 Comment=Yes
 
 [FolderOptions\Physical Objects\Database Generation\Table&amp;&amp;Column\Index\Create]
