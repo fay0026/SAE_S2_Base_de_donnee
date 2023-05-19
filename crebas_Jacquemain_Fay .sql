@@ -18,7 +18,7 @@ drop table THEME cascade constraints;
 create table THEME 
 (
    cdTheme              CHAR(5),
-   libThme              VARCHAR2(50),
+   libTheme              VARCHAR2(50),
    constraint PK_THEME primary key (cdTheme)
 );
 
@@ -28,7 +28,7 @@ create table THEME
 create table TERRITOIRE 
 (
    cdTerr               CHAR(5),
-   nomTerr              VARCHAR2(20),
+   nomTerr              VARCHAR2(30),
    constraint PK_TERRITOIRE primary key (cdTerr)
 );
 
@@ -68,7 +68,7 @@ create table EVENEMENT
    tarif                FLOAT,
    constraint PK_EVENEMENT primary key (numEv, cdSite),
    constraint CKC_NBPLACES check (nbPlaces > 20),
-   constraint CKC_dateFinEv check (dateFinEv IS NULL or dateFinEv >= dateDebEv),
+   constraint CKC_dateFinEv check (dateFinEv IS NULL or dateFinEv > dateDebEv),
    constraint FK_EVENEMEN_PRENDRE_SITE foreign key (cdSite)
       references SITE (cdSite)
 );
@@ -81,9 +81,9 @@ create table PARTICIPANT
    cdPers               CHAR(5),
    nomPers              VARCHAR(20),
    prenomPers           VARCHAR(20),
-   adrPers              VARCHAR(20),
+   adrPers              VARCHAR(30),
    cpPers               NUMBER(6),
-   villePers            VARCHAR(20),
+   villePers            VARCHAR(30),
    telPers              CHAR(10),
    tpPers               CHAR(5),
    constraint PK_PARTICIPANT primary key (cdPers),
