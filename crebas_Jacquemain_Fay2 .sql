@@ -67,7 +67,7 @@ create table EVENEMENT
    nbPlaces             NUMBER(5),
    tarif                FLOAT,
    constraint PK_EVENEMENT primary key (numEv, cdSite),
-   constraint CKC_NBPLACES check (nbPlaces > 20),
+   constraint CKC_NBPLACES check (nbPlaces >= 20),
    constraint CKC_dateFinEv check (dateFinEv IS NULL or dateFinEv > dateDebEv),
    constraint FK_EVENEMEN_PRENDRE_SITE foreign key (cdSite)
       references SITE (cdSite)
@@ -111,7 +111,6 @@ create table RESERVATION
       references PARTICIPANT (cdPers)
 );
 
-
 --2 Modification du script de creation de la base
 
 DROP TABLE PROGRAMME CASCADE CONSTRAINTS;
@@ -138,7 +137,7 @@ ALTER TABLE ACTIVITE ADD (
 
 CREATE TABLE PROGRAMME
 (
-    cdAct       CHAR(1),
+    cdAct       CHAR(5),
     cdSite      NUMBER(38),
     tpPublic    CHAR(4),
     CONSTRAINT PK_PROGRAMME PRIMARY KEY (cdAct, cdSite),
@@ -232,35 +231,12 @@ SELECT  NEW_PERS.NEXTVAL,
         'P',
         datns
 FROM TESTS1.CLIENT;
-DESC RESERVATION;
-DESC TESTSAELD.INSCRIPTION;
-INSERT INTO RESERVATION (dateResa, cdSite, numEv, cdPers,
-                        nbPlResa, modeReglt) 
-SELECT dateInscr AS dateResa,
-        cdSite,
-        numEv,
-        cdPers,
-        nbPlResa,
-        modeReglt
-FROM TESTSAELD.INSCRIPTION;
-INSERT INTO EVENEMENT (numEv, cdSite, dateDebEv, dateFinEv,
-                        nbPlaces, tarif)
-SELECT numEv,
-        cdSite,
-        dateDebEv,
-        dateFinEv,
-        nbPlaces,
-        tarif       
-FROM TESTSAELD.EVENEMENT
-WHERE nbPlaces > 20;
 
+--Pour insérer dans réservation, il nous faut les données de Site, Participant
+--et d'évènement, donc l'ordre est le suivant :
 
-DESC SITE;
-DESC TESTSAELD.SITE;
-INSERT INTO SITE(cdSite, cdTerr, cdTheme, nomSite, 
-tpSite, siteWeb,adrSite, cpSite, villeSite,
-emailSite)
-SELECT cdSite,
+INSERT INTO SITE(cdSite, cdTerr, cdTheme, nomSite, tpSite, siteWeb,adrSite, cpSite, villeSite, emailSite)
+SELECT  cdSite,
         cdTerr,
         cdTheme,
         nomSite,
@@ -270,5 +246,48 @@ SELECT cdSite,
         cpSite,
         villeSite,
         emailSite
-FROM TESTSAELD.SITE;
+FROM    TESTSAELD.SITE
+WHERE   cdTerr IN ( SELECT  cdTerr
+                    FROM    TERRITOIRE)
+        AND cdTheme IN (SELECT  cdTheme
+                        FROM    THEME);
+
+INSERT INTO EVENEMENT (numEv, cdSite, dateDebEv, dateFinEv, nbPlaces, tarif)
+SELECT  numEv,
+        cdSite,
+        dateDebEv,
+        dateFinEv,
+        nbPlaces,
+        tarif       
+FROM    TESTSAELD.EVENEMENT
+WHERE   nbPlaces >= 20
+        AND cdSite IN ( SELECT  cdSite
+                        FROM    SITE);
+        
+INSERT INTO RESERVATION (dateResa, cdSite, numEv, cdPers, nbPlResa, modeReglt) 
+SELECT  dateInscr AS dateResa,
+        cdSite,
+        numEv,
+        cdPers,
+        nbPlResa,
+        modeReglt
+FROM TESTSAELD.INSCRIPTION
+WHERE   cdSite in ( SELECT  cdSite
+                    FROM    SITE)
+        AND cdPers in ( SELECT  cdPers
+                        FROM    PARTICIPANT)
+        AND numEv in (  SELECT  numEv
+                        FROM    EVENEMENT);
+
+--PACO
+--PENSE
+--A
+--T'AJOUTER
+--EN
+--PARTICIPANT
+--!!!!!!!
+
+--c Tables PROGRAMME
+
+
 
